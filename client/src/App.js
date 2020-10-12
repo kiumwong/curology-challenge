@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import UserContactInputForm from './components/UserContactInputForm';
-import UserOrderForm from './components/UserOrderForm';
-import UserPaymentInputForm from './components/UserPaymentInputForm';
+import UserContactInputForm from './views/UserContactInputForm';
+import UserOrderForm from './views/UserOrderForm';
+import UserPaymentInputForm from './views/UserPaymentInputForm';
 
 
 function App() {
