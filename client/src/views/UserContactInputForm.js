@@ -1,192 +1,216 @@
 import React, { useState } from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import { Accordion, AccordionSummary, AccordionDetails, Button, Card, CardHeader, Grid, FormControl, InputLabel, Input, FormHelperText, TextField } from '@material-ui/core';
+import { Accordion, AccordionSummary, AccordionDetails, Card, CardHeader, Grid } from '@material-ui/core';
+import CustomButton from '../components/controls/CustomButton';
+import SelectField from '../components/controls/SelectField';
+import TextInputField from '../components/controls/TextInputField';
+import FormField from '../components/controls/FormField';
+import ValidateForm from '../components/controls/ValidateForm';
 
-import '../App.css';
 import stateArr from '../variables/states';
 
+const initialValues = {
+  ccNum: '',
+  email: '',
+  exp: '',
+  firstName: '',
+  lastName: '',
+  phone: '',
+  quantity: 0,
+  street1: '',
+  street2: '',
+  total: '',
+  city: '',
+  state: '',
+  zip: '',
+};
+
 function UserContactInputForm(props) {
-  const [inputData , setInputData] = useState({
-    city: '', email: '', firstName: '', lastName: '', phone: '', state: '', street1: '', street2: '', zip: ''});
-  const [ errorMessage , setErrorMessage ] = useState({messageCity: '', messageEmail: '', messageFirstName: '', messageLastName: '', messagePhone: '', messageState: '', messageStreet1: '', messageStreet2: '', messageZip: ''});
 
-  // console.log(inputData);
-  // console.log(props);
-  // console.log(stateArr);
-  // console.log(inputError.errorCity);
-  // setInputError([error.city: true])
+  const [isDataValid, setisDataValid] = useState(false);
 
-  const handleChange = (e) => {
-    setInputData({ 
-      ...inputData, 
-      [ e.target.name ] : e.target.value 
-    })
-  }
+  const validate = (fieldValues = values) => {
+    let err = { ...errors };
 
-  const validate = (info) => {
-    const { city, email, firstName, lastName, phone, state, street1, street2, zip } = inputData;
-    const { messageCity, messageEmail, messageFirstName, messageLastName, messagePhone, messageState, messageStreet1, messageStreet2, messageZip } = errorMessage;
-
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    console.log(errorMessage)
-    console.log(inputData);
-    console.log(firstName);
-    // console.log(state);
+    if (!fieldValues.firstName) {
+      err.firstName = fieldValues.firstName ?  '' : 'First name is required.';
+    }
     
-  
-        if (!firstName) {
-          setErrorMessage({...errorMessage, messageFirstName: 'First name is required.'})
-        } 
-      
-        if (!lastName) {
-          setErrorMessage({...errorMessage, messageLastName: 'Last Name is required.'})
-        } 
+    if (!fieldValues.lastName) {
+      err.lastName = 'Last name is required.';
+    }
+    if (!fieldValues.email) {
+      err.email = 'Email is required.';
+    }
+    if ('email' in fieldValues) {
+      err.email = (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(fieldValues.email) ? "" : "Email is not valid.";
+    }
+    
+      setErrors({ ...err });
+      console.log(errors)
+    
 
-      // if (!email || !emailRegex.test(email.toLowerCase())) {
-      //   setInputError({errorEmail: true});
-      //   setErrorMessage({messageEmail: 'Invalid Email.'})
-      // } else {
-      //   setInputError({errorEmail: false});
-      // }
+    if (fieldValues === values) {
+      console.log(fieldValues);
+      return Object.values(err).every((errs) => errs === '');
+    }
+  };
 
+  const { values, setValues, errors, setErrors, handleChange, resetForm } = ValidateForm(initialValues, true, validate);
+
+  console.log(errors);
+  console.log(values);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      setisDataValid(true);
+      resetForm();
+    }
   };
 
   return (
-    <div className='Input'>
-            <Card>
-              <Accordion>
-              <AccordionSummary style={{ backgroundColor: 'rgb(51, 46, 84)' }} expandIcon={'+'} aria-controls='#' id='#'>
-              <CardHeader 
-                style={{ color: '#fff' }} 
-                title='Contact Information'/>
+    <FormField onSubmit={handleSubmit}>
+      <Card>
+        <Grid container>
+          <Grid item xs={6}>
+            <Accordion>
+              <AccordionSummary
+                style={{ backgroundColor: 'rgb(51, 46, 84)' }}
+                expandIcon={'+'}
+                aria-controls="#"
+                id="#"
+              >
+                <CardHeader style={{ color: '#fff' }} title="Contact Information" />
               </AccordionSummary>
               <AccordionDetails>
-                <TextField
-                  error={errorMessage.messageFirstName}
-                  helperText={errorMessage.messageFirstName ? errorMessage.messageFirstName : ''}
-                  id='firstName'
-                  label='First Name'
-                  name='firstName'
-                  onChange={handleChange}
-                  placeholder='Kiu'
-                  required
-                  value={inputData.firstName}
-                  variant='outlined'
-                  onBlur={() => validate()}
-                />
-                <TextField
-                  error={errorMessage.messageLastName}
-                  helperText={errorMessage.messageLastName ? errorMessage.messageLastName : ''}
-                  id='lastName'
-                  label='Last Name'
-                  name='lastName'
-                  onChange={handleChange}
-                  placeholder='Kiu'
-                  required
-                  value={inputData.lastName}
-                  variant='outlined'
-                  onBlur={() => validate('lastName')}
-                />
-                <TextField
-                  error={errorMessage.messageEmail}
-                  helperText={errorMessage.messageEmail ? errorMessage.messageEmail: 'hello'}
-                  id='email'
-                  label='Email'
-                  name='email'
-                  onChange={handleChange}
-                  placeholder='hello@gmail.com'
-                  required
-                  value={inputData.email}
-                  variant='outlined'
-                />
-                <TextField
-                  error={inputData.error}
-                  helperText={inputData.error ? inputData.errorMessage : 'hello'}
-                  id='street1'
-                  label='Address'
-                  name='street1'
-                  onChange={handleChange}
-                  placeholder='123 Smart St.'
-                  required
-                  value={inputData.street1}
-                  variant='outlined'
-                />
-                <TextField
-                  error={inputData.error}
-                  helperText={inputData.error ? inputData.errorMessage : 'hello'}
-                  id='street2'
-                  label='Apartment / Other'
-                  name='street2'
-                  onChange={handleChange}
-                  placeholder='Unit 2'
-                  required
-                  value={inputData.street2}
-                  variant='outlined'
-                />
-                <TextField
-                  error={inputData.error}
-                  helperText={inputData.error ? inputData.errorMessage : 'hello'}
-                  id='city'
-                  label='City'
-                  name='city'
-                  onChange={handleChange}
-                  placeholder='New York'
-                  required
-                  value={inputData.city}
-                  variant='outlined'
-                />
-                <TextField
-                  error={inputData.error}
-                  helperText={inputData.error ? inputData.errorMessage : 'hello'}
-                  id='state'
-                  label='State'
-                  name='state'
-                  onChange={handleChange}
-                  placeholder='New York'
-                  required
-                  select
-                  SelectProps={{ native: true }}
-                  value={inputData.state}
-                  variant='outlined'
-                  >
-                    <option aria-label='None' value=''/>
-                    {stateArr.map((state) =>  <option>{state.abbreviation}</option>)}
-                  </TextField>
-                <TextField
-                  error={inputData.error}
-                  helperText={inputData.error ? inputData.errorMessage : 'hello'}
-                  id='zip'
-                  label='Zip Code'
-                  name='zip'
-                  onChange={handleChange}
-                  placeholder='10009'
-                  required
-                  value={inputData.zip}
-                  variant='outlined'
-                />
-                <TextField
-                  error={inputData.error}
-                  helperText={inputData.error ? inputData.errorMessage : 'hello'}
-                  id='phone'
-                  label='Phone Number'
-                  name='phone'
-                  onChange={handleChange}
-                  placeholder='917-234-1203'
-                  required
-                  value={inputData.phone}
-                  variant='outlined'
-                />
-                <Button 
-                  color={'primary'} 
-                  variant={'contained'} 
-                  disabled={false} 
-                  >Continue</Button>
-            </AccordionDetails>
+                <Grid item xs={6}>
+                  <TextInputField
+                    error={errors.firstName}
+                    id="firstName"
+                    label="First Name"
+                    name="firstName"
+                    onChange={handleChange}
+                    placeholder="John"
+                    required={true}
+                    value={values.firstName}
+                    variant="outlined"
+                    onBlur={validate}
+                  />
+                  <TextInputField
+                    error={errors.lastName}
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    onChange={handleChange}
+                    placeholder="Smith"
+                    required={true}
+                    value={values.lastName}
+                    variant="outlined"
+                    onBlur={validate}
+                  />
+                  <TextInputField
+                    error={errors.email}
+                    id="email"
+                    label="Email"
+                    name="email"
+                    onChange={handleChange}
+                    placeholder="johnsmith@gmail.com"
+                    required={true}
+                    value={values.email}
+                    variant="outlined"
+                    onBlur={validate}
+                  />
+                  <TextInputField
+                    error={errors.phone}
+                    id="phone"
+                    label="Phone Number"
+                    name="phone"
+                    onChange={handleChange}
+                    placeholder="10009"
+                    required={true}
+                    value={values.phone}
+                    variant="outlined"
+                    onBlur={validate}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextInputField
+                    error={errors.street1}
+                    id="street1"
+                    label="Address"
+                    name="street1"
+                    onChange={handleChange}
+                    placeholder="3928 Broadway Ave."
+                    required={true}
+                    value={values.street1}
+                    variant="outlined"
+                    onBlur={validate}
+                  />
+                  <TextInputField
+                    error={errors.street2}
+                    id="street2"
+                    label="Address 2"
+                    name="street2"
+                    onChange={handleChange}
+                    placeholder="Apt 3B"
+                    value={values.street2}
+                    variant="outlined"
+                    onBlur={validate}
+                  />
+                  <TextInputField
+                    error={errors.city}
+                    id="city"
+                    label="City"
+                    name="city"
+                    onChange={handleChange}
+                    placeholder="New York"
+                    required={true}
+                    value={values.city}
+                    variant="outlined"
+                    onBlur={validate}
+                  />
+                  <SelectField
+                    error={errors.state}
+                    id="state"
+                    label="State"
+                    name="state"
+                    onChange={handleChange}
+                    placeholder="NY"
+                    required={true}
+                    value={values.state}
+                    options={stateArr}
+                  />
+                  <TextInputField
+                    error={errors.zip}
+                    id="zip"
+                    label="Zip Code"
+                    name="zip"
+                    onChange={handleChange}
+                    placeholder="10009"
+                    required={true}
+                    value={values.zip}
+                    variant="outlined"
+                    onBlur={validate}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <CustomButton
+                    color={'primary'}
+                    variant={'contained'}
+                    disabled={isDataValid}
+                    size={'large'}
+                    onClick={handleSubmit}
+                    text={'Next'}
+                  />
+                </Grid>
+              </AccordionDetails>
             </Accordion>
-           </Card>
-    </div>
+          </Grid>
+        </Grid>
+      </Card>
+    </FormField>
   );
 }
 
