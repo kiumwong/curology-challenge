@@ -28,6 +28,7 @@
   "dependencies": {
     "awilix": "^3.0.9",
     "awilix-express": "^0.11.0",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.17.1",
     "compression": "^1.6.2",
     "concurrently": "^5.3.0",
@@ -39,6 +40,7 @@
     "express": "^4.15.2",
     "express-status-monitor": "^0.1.9",
     "http-status": "^1.0.1",
+    "jsonwebtoken": "^8.5.1",
     "log4js": "^1.1.1",
     "method-override": "^2.3.7",
     "morgan": "^1.8.1",

@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 import { TextField } from '@material-ui/core';
 
 function TextInputField(props) {
-  const { error, id, label, name, onChange, onBlur, placeholder, required, value } = props;
-
-  console.log(props);
+  const { disabled, error = null, id, label, name, onChange, onBlur, placeholder, defaultValue, required, value } = props;
 
   return (
     <TextField
@@ -18,6 +16,7 @@ function TextInputField(props) {
       placeholder={placeholder}
       value={value}
       variant="outlined"
+      disabled={disabled}
       onBlur={onBlur}
       required={required}
       {...(error && { error: true, helperText: error })}

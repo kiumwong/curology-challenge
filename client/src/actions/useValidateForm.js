@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 
-function ValidateForm(initialValues, validateOnBlur = false, validate) {
+function useValidateForm(initialValues, validateOnChange = false, validate) {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
 
@@ -11,7 +11,7 @@ function ValidateForm(initialValues, validateOnBlur = false, validate) {
       ...values,
       [name]: value,
     });
-    if (validateOnBlur) validate({ [name]: value });
+    if (validateOnChange) validate({ [name]: value });
   };
 
   const resetForm = () => {
@@ -29,4 +29,4 @@ function ValidateForm(initialValues, validateOnBlur = false, validate) {
   };
 }
 
-export default ValidateForm;
+export default useValidateForm;
