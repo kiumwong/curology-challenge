@@ -2,32 +2,47 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@material-ui/core';
+import { TextField, MenuItem } from '@material-ui/core';
 
 function SelectField(props) {
-  const { error, id, label, name, onChange, onBlur, options, value, x, y } = props;
+  const {
+    error = null,
+    defaultValue,
+    id,
+    label,
+    name,
+    onChange,
+    onBlur,
+    options,
+    placeholder,
+    required,
+    select,
+    value,
+  } = props;
 
   return (
-    <FormControl variant="outlined" {...(error && { error: true })}>
-      <InputLabel>{label}</InputLabel>
-      <Select
-        id={id}
-        label={label}
-        name={name}
-        onBlur={onBlur}
-        onChange={onChange}
-        value={value}
-        options={options}
-      >
-        <MenuItem value="None"></MenuItem>
-        {options.map((item) => (
-          <MenuItem key={item.name} value={item.name}>
-            {item.abbreviation}
-          </MenuItem>
-        ))}
-      </Select>
-      {error && <FormHelperText>{error}</FormHelperText>}
-    </FormControl>
+    <TextField
+      id={id}
+      defaultValue={defaultValue}
+      label={label}
+      name={name}
+      onBlur={onBlur}
+      onChange={onChange}
+      placeholder={placeholder}
+      value={value}
+      select={select}
+      required={required}
+      variant="outlined"
+      options={options}
+      {...(error && { error: true, helperText: error })}
+    >
+      <MenuItem value={defaultValue}>{defaultValue}</MenuItem>
+      {options.map((item) => (
+        <MenuItem key={item.id} value={item.name}>
+          {item.name}
+        </MenuItem>
+      ))}
+    </TextField>
   );
 }
 
