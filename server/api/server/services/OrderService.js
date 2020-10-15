@@ -1,4 +1,5 @@
 import database from "../src/models";
+import Sequelize from "sequelize";
 
 class OrderService {
   static async addOrder(newOrder) {
@@ -70,15 +71,11 @@ class OrderService {
     try {
       return await database.Order.findAndCountAll({
         where: {
-          $and: [
-            {
-              firstName: newOrder.firstName,
-              lastName: newOrder.lastName,
-              email: newOrder.email,
-              phone: newOrder.phone,
-              street1: newOrder.address.street1,
-            },
-          ],
+          firstName: newOrder.firstName,
+          lastName: newOrder.lastName,
+          email: newOrder.email,
+          phone: newOrder.phone,
+          street1: newOrder.address.street1,
         },
       });
     } catch (error) {
@@ -104,19 +101,18 @@ class OrderService {
     }
   }
 
+  //Need to rework logic
+
   static async exceedsMaxOrder(newOrder) {
     try {
-      const OrderToDelete = await database.Order.findOne({
-        where: { id: Number(id) },
+      return await database.Order.findAll({
+        where: {
+          email: newOrder.email,
+          quantity: {
+            $gte: Sequelize.literal("COALESCE(SUM(quantity)"),
+          },
+        },
       });
-
-      if (OrderToDelete) {
-        const deletedOrder = await database.Order.destroy({
-          where: { id: Number(id) },
-        });
-        return deletedOrder;
-      }
-      return null;
     } catch (error) {
       return error;
     }

@@ -23,26 +23,37 @@ class OrderController {
       return util.send(res);
     }
     const newOrder = req.body;
-    const duplicateOrder = await OrderService.duplicateOrder(newOrder);
 
-    if (duplicateOrder > 1) {
-      util.setError(401, "A user with the information already exists.");
+    try {
+      const duplicateOrder = await OrderService.duplicateOrder(newOrder);
+      if (duplicateOrder) {
+        util.setError(401, "A user with the information already exists.");
+        util.send(res);
+      }
+    } catch (error) {
+      util.setError(405, error);
       return util.send(res);
     }
-    const exceedsMaxOrder = await OrderService.duplicateOrder(newOrder);
-    if (exceedsMaxOrder > 3) {
-      util.setError(
-        402,
-        "Magic potion order may not exceed maximum quanity of 3"
-      );
+
+    try {
+      const exceedsMaxOrder = await OrderService.duplicateOrder(newOrder);
+      if (exceedsMaxOrder) {
+        util.setError(
+          402,
+          "Magic potion order may not exceed maximum quanity of 3"
+        );
+        util.send(res);
+      }
+    } catch (error) {
+      util.setError(405, error);
       return util.send(res);
     }
     try {
       const createdOrder = await OrderService.addOrder(newOrder);
       util.setSuccess(201, "Your Order has been placed!", createdOrder);
-      return util.send(res);
+      util.send(res);
     } catch (error) {
-      util.setError(406, error.message);
+      util.setError(406, error);
       return util.send(res);
     }
   }

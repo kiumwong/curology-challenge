@@ -7,6 +7,7 @@ import logger from "morgan";
 
 const app = express();
 const port = process.env.PORT || 5678;
+config.config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
