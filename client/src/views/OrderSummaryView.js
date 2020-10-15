@@ -3,6 +3,7 @@ import UserContactInputForm from './UserContactInputForm';
 import UserQuantityForm from './UserQuantityForm';
 import UserPaymentInputForm from './UserPaymentInputForm';
 import FormField from '../components/controls/FormField';
+import NavBar from '../components/controls/NavBar';
 
 function OrderSummaryView(props) {
   const { handleSubmit } = props;
@@ -17,11 +18,10 @@ function OrderSummaryView(props) {
   const paymentData = JSON.parse(localStorage.getItem('paymentData'));
 
   console.log(process.env.NODE_ENV);
-  console.log(process.envPUBLIC_URL)
-  console.log(process.env.NODE_PATH)
-  console.log(process.env.PORT)
-  console.log(process.env)
-
+  console.log(process.envPUBLIC_URL);
+  console.log(process.env.NODE_PATH);
+  console.log(process.env.PORT);
+  console.log(process.env);
 
   // window.addEventListener("storage", storageEventHandler, false);
 
@@ -43,6 +43,7 @@ function OrderSummaryView(props) {
     <>
       <div className="App">
         <FormField onSubmit={handleSubmit}>
+          <NavBar/>
           <UserQuantityForm />
           <UserContactInputForm />
           <UserPaymentInputForm />

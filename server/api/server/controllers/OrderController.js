@@ -26,7 +26,7 @@ class OrderController {
 
     try {
       const duplicateOrder = await OrderService.duplicateOrder(newOrder);
-      if (duplicateOrder) {
+      if (duplicateOrder > 1) {
         util.setError(401, "A user with the information already exists.");
         util.send(res);
       }

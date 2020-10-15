@@ -14,7 +14,6 @@ import {
   Paper,
 } from '@material-ui/core';
 import CustomButton from '../components/controls/CustomButton';
-import SelectField from '../components/controls/SelectField';
 import TextInputField from '../components/controls/TextInputField';
 import FormField from '../components/controls/FormField';
 
@@ -23,10 +22,9 @@ import useValidateForm from '../actions/useValidateForm';
 import initialValues from '../variables/initialValues';
 
 function UserPaymentInputForm(props) {
-
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isValidOrder, setValidOrder] = useState(false);
-
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
   const validate = (fieldValues = values) => {
     let err = { ...errors };
@@ -66,10 +64,9 @@ function UserPaymentInputForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-      registerOrder();
+    setLoading(true);
+    registerOrder();
   };
-
-  console.log(errorMessage);
 
   const registerOrder = async () => {
     const orderData = JSON.parse(localStorage.getItem('orderData'));
@@ -94,27 +91,34 @@ function UserPaymentInputForm(props) {
       quantity: JSON.parse(orderData).quantity,
       total: JSON.parse(orderData).total,
     });
-
-    console.log(requestBody);
-
-    const response = await fetch('http://127.0.0.1:5678/api/v1/magic', {
-      method: 'POST',
-      body: requestBody,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const responseBody = await response.json();
-    if (response.status === 409) {
-      setErrorMessage({
-        errorMessage: responseBody.message,
+    try {
+      const response = await fetch('http://127.0.0.1:5678/api/v1/magic', {
+        method: 'POST',
+        body: requestBody,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
       });
-      return;
-    } else {
-      localStorage.setItem('orders', JSON.stringify(requestBody));
-      setValidOrder(true);
+      const responseBody = await response.json();
+      if (responseBody.status === 400) {
+        setError("Please provide complete details.");
+        setLoading(false);
+      } else if (responseBody.status === 401) {
+        setError("A user with the information already exists.");
+        setLoading(false);
+      } else if (responseBody.status === 401) {
+        setError("Magic potion order may not exceed maximum quanity of 3");
+        setLoading(false);
+      }
+        if (responseBody.status === 201 || 204) {
+          setSuccess("Your Order has been placed!");
+          localStorage.setItem('orders', JSON.stringify(requestBody));
+          setLoading(false);
+        }
+    } catch (error) {
+      setError('We are working on this issue!');
+      setLoading(false);
     }
   };
 
@@ -131,7 +135,7 @@ function UserPaymentInputForm(props) {
                 id="#"
               >
                 <CardHeader style={{ color: '#fff' }} title="Payment Information" />
-                {errorMessage}
+                {error}
               </AccordionSummary>
               <AccordionDetails>
                 <Grid item xs={6} sm={6} md={4}>
