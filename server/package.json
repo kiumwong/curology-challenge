@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon --exec babel-node ./api/index.js",
     "sequelize": "cross-env NODE_PATH=. sequelize",
+    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -21,6 +22,7 @@
     "path": "^0.12.7",
     "pg": "^8.4.1",
     "pg-hstore": "^2.3.3",
+    "prettier": "^2.1.2",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
