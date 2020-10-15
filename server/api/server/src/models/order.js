@@ -1,4 +1,4 @@
-const { Model } = require('sequelize');
+const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
@@ -10,67 +10,70 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  Order.init({
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
+  }
+  Order.init(
+    {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      street1: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      street2: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      state: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      zip: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      total: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      ccNum: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      exp: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      fulfilled: {
+        type: DataTypes.BOOL,
+        allowNull: false,
+      },
     },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    street1: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    street2: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    state: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    zip: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    total: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    ccNum: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    exp: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    fulfilled: {
-      type: DataTypes.BOOL,
-      allowNull: false,
-    },
-  }, {
-    sequelize: sequelize,
-    modelName: 'Order',
-  });
+    {
+      sequelize: sequelize,
+      modelName: "Order",
+    }
+  );
   return Order;
 };
