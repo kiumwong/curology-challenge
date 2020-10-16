@@ -4,14 +4,13 @@ import bodyParser from "body-parser";
 import OrderRoutes from "./server/routes/OrderRoutes";
 import cors from "cors";
 import logger from "morgan";
-const path = require("path");
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const env = require("dotenv").config({ path: './.env' });
+import path from "path";
+
 
 
 const app = express();
-const port = process.env.PORT || 5678;
+const port = process.env.PORT || '5678';
+
 config.config();
 
 app.use(bodyParser.json());
