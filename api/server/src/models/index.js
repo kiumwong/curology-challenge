@@ -52,7 +52,7 @@ fs
     const model = require(path.join(__dirname, file));
     db[model.name] = model;
     } catch (error) {
-      return error;
+      console.log(error);
     }
   });
 
