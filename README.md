@@ -29,24 +29,19 @@
 * [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
-* [Usage](#usage)
-* [Roadmap](#roadmap)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
-* [Acknowledgements](#acknowledgements)
-
-
+* [Data Schema](#dataschema)
+* [Scaling](#Scaling)
+* [Front End](#frontend)
+* [API Architecture](#apiarchitecture)
+* [What Would You Do Differently?](#whatwouldyoudodifferently)
+* [Improve or Scale the Application](#improveorscaletheapplication)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`kiumwong`, `curology-challenge.git`, `twitter_handle`, `email`
-### Built With
+# Built With
 
 * [ReactJS](https://reactjs.org/): A JavaScript library for building user interfaces.
 * [Material-UI](https://material-ui.com/): A React UI framework.
@@ -105,74 +100,44 @@ Access http://localhost:5678/api/v1/magic
 Provide database credentials under config/config.js
 ```
 
-<!-- USAGE EXAMPLES -->
-## Usage
+<!-- Data Schema EXAMPLES -->
+## Data Schema
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Existing data schema represents transactional "orderItems" placed by a "userID" given a specific "productID which results in a "transactionID". For simplicity, I treated it as transactional data. However in a real life scenario, I would break and map the relationship as follows:
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+![](https://user-images.githubusercontent.com/68714620/96242633-ad691c00-0f71-11eb-9478-b522d5abf9e5.png)
 
+<!-- Scaling -->
+## Scaling
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-See the [open issues](https://github.com/kiumwong/curology-challenge.git/issues) for a list of proposed features (and known issues).
-
-
+Scaling comes at a price. The question now is how do we scale efficently which is measured by cost relative to demand. From a server perspective, there are 4 main factors that will drive up costs; Storage, CPU, Network I/O and Disk I/O. By monitoring and analyzing this data, it will be easy to determine, which metric is the bottleneck in the process. In terms of this application, I had leveraged localStorage as a means of validation so that it would reduce API costs. A common practice is to cache database queries based on frequency of queries ran which provides a O(1) vs O(n) space and time complexity. In addition, setting up load balancers, protocols for database indexes, caching, leveraging batch loads or queues will help you scale and reduce costs.
 
 <!-- CONTRIBUTING -->
-## Contributing
+## Front End
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
+I had used reactJS on the front end as it provides a lot of advantage in View of MVC structure. One problem with MVC is bidrectional communication. It can get hard to debug and understand flow of data when app scales. As an alternative approach, Facebook has introduced Flux which is made of 4 key elements; Actions, Stores, Dispatchers and View. This structure allows for unidirectional communication. 
 
 <!-- LICENSE -->
-## License
+## API Architecture
 
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
+I had applied a Restful CRUD API approach. It uses HTTP protocols like GET, PATCH, DELETE and POST to link resources to actions between client and server. REST also mandates the separation between client and server. From the data layer, I had applied CRUD to CREATE, READ, UPDATE or DELETE.   
 
 <!-- CONTACT -->
-## Contact
+## What Would You Do Differently?
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
+Things I would have done differently:
 
-Project Link: [https://github.com/kiumwong/curology-challenge.git](https://github.com/kiumwong/curology-challenge.git)
-
-
+1. Use Redux for better state management
+2. Use TypeScript instead of ReactJS as static typing allows for better debugging processes and helps to catch errors
+3. Work on a database. It was hard to do sequelize commands without being able to work or see the data results
 
 <!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
+## Improve or Scale the Application
 
-* []()
-* []()
-* []()
+As mentioned above:
 
-
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/kiumwong/repo.svg?style=flat-square
-[contributors-url]: https://github.com/kiumwong/repo/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/kiumwong/repo.svg?style=flat-square
-[forks-url]: https://github.com/kiumwong/repo/network/members
-[stars-shield]: https://img.shields.io/github/stars/kiumwong/repo.svg?style=flat-square
-[stars-url]: https://github.com/kiumwong/repo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/kiumwong/repo.svg?style=flat-square
-[issues-url]: https://github.com/kiumwong/repo/issues
-[license-shield]: https://img.shields.io/github/license/kiumwong/repo.svg?style=flat-square
-[license-url]: https://github.com/kiumwong/repo/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/kiumwong
-[product-screenshot]: images/screenshot.png
+1. Use caching to do more of the calculations. My application uses localStorage to do the initial test validations of the data. This will also save on costs when you hit the API. 
+2. Use a database with good indexing and structure in place. I didn't focus too much on the database which definitely doesn't work out when you need to use the data to determine answers. 
+3. Set up additional validation checks on the backend. I had focused most of my effort on the front end checks as data persisted there.
+4. I created unit tests to test the end points but ideally should have try to work on some more.
+5. I thought about using jwt tokens to track users who had already purchased items. As the data is transmitted back to the user, I would provide a jwt token so you can tack is customer is an existing customer. 
