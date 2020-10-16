@@ -103,7 +103,7 @@ function UserPaymentInputForm(props) {
       total: JSON.parse(orderData).total,
     });
     try {
-      const response = await fetch('http://127.0.0.1:5678/api/v1/magic', {
+      const response = await fetch('/api/v1/magic', {
         method: 'POST',
         body: requestBody,
         headers: {
