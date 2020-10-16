@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardBody,
-  CardHeader,
-  Grid,
-  Paper,
-} from '@material-ui/core';
+import { Card, CardHeader, CircularProgress, Grid } from '@material-ui/core';
 import CustomButton from '../components/controls/CustomButton';
 import TextInputField from '../components/controls/TextInputField';
 import FormField from '../components/controls/FormField';
+import MessageAlert from '../components/controls/MessageAlert';
 
 import useValidateForm from '../actions/useValidateForm';
 
@@ -24,7 +12,9 @@ import initialValues from '../variables/initialValues';
 function UserPaymentInputForm(props) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(false);
+  const [successAlert, setSuccessAlert] = useState(false);
 
   const validate = (fieldValues = values) => {
     let err = { ...errors };
@@ -50,6 +40,7 @@ function UserPaymentInputForm(props) {
     }
 
     setErrors({ ...err });
+    setIsLoading(false);
 
     if (fieldValues === values) {
       return Object.values(err).every((x) => x == '');
@@ -62,10 +53,33 @@ function UserPaymentInputForm(props) {
     validate,
   );
 
+  console.log(values.ccNum)
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    registerOrder();
+    setIsLoading(true);
+    if (validate()) {
+      setIsLoading(true);
+      registerOrder();
+      if(success) {
+        resetForm();
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const handleSuccessClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSuccessAlert(false);
+  };
+
+  const handleErrorClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setErrorAlert(false);
   };
 
   const registerOrder = async () => {
@@ -102,82 +116,90 @@ function UserPaymentInputForm(props) {
       });
       const responseBody = await response.json();
       if (responseBody.status === 400) {
-        setError("Please provide complete details.");
-        setLoading(false);
+        window.alert('Please provide complete details.')
+        setError('Please provide complete details.');
+        setIsLoading(false);
+        setErrorAlert(true);
       } else if (responseBody.status === 401) {
-        setError("A user with the information already exists.");
-        setLoading(false);
+        window.alert('A user with the information already exists.')
+        setError('A user with the information already exists.');
+        setIsLoading(false);
+        setErrorAlert(true);
       } else if (responseBody.status === 401) {
-        setError("Magic potion order may not exceed maximum quanity of 3");
-        setLoading(false);
+        window.alert('Magic potion order may not exceed maximum quanity of 3')
+        setError('Magic potion order may not exceed maximum quanity of 3');
+        setIsLoading(false);
+        setErrorAlert(true);
       }
-        if (responseBody.status === 201 || 204) {
-          setSuccess("Your Order has been placed!");
-          localStorage.setItem('orders', JSON.stringify(requestBody));
-          setLoading(false);
-        }
+      if (responseBody.status === 201 || 204) {
+        window.alert(`Thank you ${values.firstName} ${values.lastName}! Your order for ${values.quantity} Magic potion(s), total of ${values.total} will be charged to cc: ${values.ccNum}, exp: ${values.exp}. Your order will be shipped to ${values.street1} ${values.street2} ${values.city}, ${values.state}, ${values.zip}. If we have any issues, we will contact you at ${values.email} or ${values.phone}. Follow us for more details on the Magic Potion!`)
+        setSuccess('Your Order has been placed!');
+        localStorage.setItem('orders', JSON.stringify(requestBody));
+        setIsLoading(false);
+        setSuccessAlert(true);
+      }
     } catch (error) {
+      window.alert(`Sorry ${values.firstName} ${values.lastName}! Your order for ${values.quantity} Magic potion(s), total of ${values.total} is very important to us. But due to the high volumes of orders, we are having issues with our backend. Your cc: ${values.ccNum}, exp: ${values.exp} will NOT be charged. If you see any charges, please contact us. Unfortunately, your order will NOT be shipped to ${values.street1} ${values.street2} ${values.city}, ${values.state}, ${values.zip}. If we fix our backend issues related to no database to query (sequelize) order parameters, we will contact you at ${values.email} or ${values.phone}. Follow us for more details on the Magic Potion!`)
       setError('We are working on this issue!');
-      setLoading(false);
+      setIsLoading(false);
+      setErrorAlert(true);
     }
   };
 
   return (
     <FormField onSubmit={handleSubmit}>
-      <Card>
-        <Grid container>
-          <Grid item xs={12} sm={12} md={8}>
-            <Accordion>
-              <AccordionSummary
-                style={{ backgroundColor: 'rgb(51, 46, 84)' }}
-                expandIcon={'+'}
-                aria-controls="#"
-                id="#"
-              >
-                <CardHeader style={{ color: '#fff' }} title="Payment Information" />
-                {error}
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid item xs={6} sm={6} md={4}>
-                  <TextInputField
-                    error={errors.ccNum}
-                    id="ccNum"
-                    label="Credit Card Number"
-                    name="ccNum"
-                    onChange={handleChange}
-                    placeholder="4357 5869 4748 4748"
-                    required={true}
-                    value={values.ccNum}
-                    variant="outlined"
-                    onBlur={handleChange}
-                  />
-                  <TextInputField
-                    error={errors.exp}
-                    id="exp"
-                    label="Expiration Date"
-                    name="exp"
-                    onChange={handleChange}
-                    placeholder="02/2024"
-                    required={true}
-                    value={values.exp}
-                    variant="outlined"
-                    onBlur={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6} md={4}>
-                  <CustomButton
-                    color={'primary'}
-                    variant={'contained'}
-                    size={'large'}
-                    onClick={handleSubmit}
-                    text={'Next'}
-                  />
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
+      <Grid container xs={12} sm={12} md={12}>
+        <Card>
+          <CardHeader style={{ backgroundColor: 'rgb(51, 46, 84)', color: '#fff' }} title="Payment Information" />
+
+          {errorAlert ? (
+            <MessageAlert errorMessage={`Error: ${error}`} onClose={handleErrorClose} onClick={handleErrorClose} autoHideDuration={6000} />
+          ) : null}
+
+          {successAlert ? (
+            <MessageAlert errorMessage={`Success: ${success}`} onClick={handleSuccessClose} onClose={handleSuccessClose} autoHideDuration={6000} />
+          ) : null}
+
+          <Grid container direction="row" justify="space-evenly" alignItems="center">
+            <TextInputField
+              error={errors.ccNum}
+              style={{ padding: '10px', width: '100%' }}
+              id="ccNum"
+              label="Credit Card Number"
+              name="ccNum"
+              onChange={handleChange}
+              placeholder="4357 5869 4748 4748"
+              required={true}
+              value={values.ccNum}
+              variant="outlined"
+              onBlur={handleChange}
+            />
+            <TextInputField
+              error={errors.exp}
+              style={{ padding: '10px', width: '100%' }}
+              id="exp"
+              label="Expiration Date"
+              name="exp"
+              onChange={handleChange}
+              placeholder="02/2024"
+              required={true}
+              value={values.exp}
+              variant="outlined"
+              onBlur={handleChange}
+            />
           </Grid>
-        </Grid>
-      </Card>
+
+          <Grid container direction="row" justify="space-evenly" alignItems="center">
+            <CustomButton
+              color={'primary'}
+              variant={'contained'}
+              size={'large'}
+              onClick={handleSubmit}
+              text={isLoading ? <CircularProgress color={'inherit'} /> : 'Submit Order'}
+            />
+          </Grid>
+        </Card>
+      </Grid>
     </FormField>
   );
 }
