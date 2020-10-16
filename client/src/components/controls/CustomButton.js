@@ -8,11 +8,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CustomButton(props) {
-  const { color, text, size, variant, onClick, disabled, ...other } = props;
+  const { color, text, size, variant, onClick, disabled, href, ...other } = props;
   const classes = useStyles();
 
   return (
     <Button
+      href={href}
       color={color || 'primary'}
       variant={variant || 'contained'}
       size={size || 'large'}

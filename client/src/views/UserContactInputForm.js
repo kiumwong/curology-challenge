@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-
-import { Accordion, AccordionSummary, AccordionDetails, Card, CardHeader, Grid } from '@material-ui/core';
+import React from 'react';
+import { Card, CardHeader, Grid } from '@material-ui/core';
 import CustomButton from '../components/controls/CustomButton';
 import SelectField from '../components/controls/SelectField';
 import TextInputField from '../components/controls/TextInputField';
@@ -12,8 +11,6 @@ import initialValues from '../variables/initialValues';
 import stateArr from '../variables/states';
 
 function UserContactInputForm(props) {
-  const [isDataValid, setisDataValid] = useState(true);
-
   const validate = (fieldValues = values) => {
     let err = { ...errors };
 
@@ -111,151 +108,152 @@ function UserContactInputForm(props) {
         },
       });
       localStorage.setItem('userData', JSON.stringify(requestBody));
-      const userData = JSON.parse(localStorage.getItem('userData'));
-      console.log(JSON.parse(userData));
+      window.alert(
+        `Thank you ${values.firstName} ${values.lastName}! Just one more step before getting your Magic Potion order! Continue to Payment! Your order for ${values.quantity} Magic potion(s), total of ${values.total} will be shipped to ${values.street1} ${values.street2} ${values.city}, ${values.state}, ${values.zip}. If we have any issues, we will contact you at ${values.email} or ${values.phone}. Follow us for more details on the Magic Potion!`,
+      );
     }
   };
 
   return (
     <FormField onSubmit={handleSubmit}>
-      <Card>
-        <Grid container>
-          <Grid item xs={12} sm={12} md={8}>
-            <Accordion>
-              <AccordionSummary
-                style={{ backgroundColor: 'rgb(51, 46, 84)' }}
-                expandIcon={'+'}
-                aria-controls="#"
-                id="#"
-              >
-                <CardHeader style={{ color: '#fff' }} title="Contact Information" />
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid item xs={6} sm={6} md={4}>
-                  <TextInputField
-                    error={errors.firstName}
-                    id="firstName"
-                    label="First Name"
-                    name="firstName"
-                    onChange={handleChange}
-                    placeholder="John"
-                    required={true}
-                    value={values.firstName}
-                    variant="outlined"
-                    onBlur={handleChange}
-                  />
-                  <TextInputField
-                    error={errors.lastName}
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    onChange={handleChange}
-                    placeholder="Smith"
-                    required={true}
-                    value={values.lastName}
-                    variant="outlined"
-                    onBlur={handleChange}
-                  />
-                  <TextInputField
-                    error={errors.email}
-                    id="email"
-                    label="Email"
-                    name="email"
-                    onChange={handleChange}
-                    placeholder="johnsmith@gmail.com"
-                    required={true}
-                    value={values.email}
-                    variant="outlined"
-                    onBlur={handleChange}
-                  />
-                  <TextInputField
-                    error={errors.phone}
-                    id="phone"
-                    label="Phone Number"
-                    name="phone"
-                    onChange={handleChange}
-                    placeholder="10009"
-                    required={true}
-                    value={values.phone}
-                    variant="outlined"
-                    onBlur={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6} md={4}>
-                  <TextInputField
-                    error={errors.street1}
-                    id="street1"
-                    label="Address"
-                    name="street1"
-                    onChange={handleChange}
-                    placeholder="3928 Broadway Ave."
-                    required={true}
-                    value={values.street1}
-                    variant="outlined"
-                    onBlur={handleChange}
-                  />
-                  <TextInputField
-                    error={errors.street2}
-                    id="street2"
-                    label="Address 2"
-                    name="street2"
-                    onChange={handleChange}
-                    placeholder="Apt 3B"
-                    value={values.street2}
-                    variant="outlined"
-                    onBlur={handleChange}
-                  />
-                  <TextInputField
-                    error={errors.city}
-                    id="city"
-                    label="City"
-                    name="city"
-                    onChange={handleChange}
-                    placeholder="New York"
-                    required={true}
-                    value={values.city}
-                    variant="outlined"
-                    onBlur={handleChange}
-                  />
-                  <SelectField
-                    error={errors.state}
-                    id="state"
-                    label="State"
-                    name="state"
-                    onChange={handleChange}
-                    required={true}
-                    select={true}
-                    value={values.state}
-                    onBlur={handleChange}
-                    options={stateArr}
-                  />
-                  <TextInputField
-                    error={errors.zip}
-                    id="zip"
-                    label="Zip Code"
-                    name="zip"
-                    onChange={handleChange}
-                    placeholder="10009"
-                    required={true}
-                    value={values.zip}
-                    variant="outlined"
-                    onBlur={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6} md={4}>
-                  <CustomButton
-                    color={'primary'}
-                    variant={'contained'}
-                    size={'large'}
-                    onClick={handleSubmit}
-                    text={'Next'}
-                  />
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
+      <Grid container xs={12} sm={12} md={12}>
+        <Card>
+          <CardHeader
+            style={{ padding: '10px', backgroundColor: 'rgb(51, 46, 84)', color: '#fff' }}
+            title="Contact Information"
+          />
+          <Grid container direction="row" justify="space-evenly" alignItems="center">
+            <TextInputField
+              style={{ padding: '10px', width: '45%' }}
+              error={errors.firstName}
+              id="firstName"
+              label="First Name"
+              name="firstName"
+              onChange={handleChange}
+              placeholder="John"
+              required={true}
+              value={values.firstName}
+              variant="outlined"
+              onBlur={handleChange}
+            />
+            <TextInputField
+              style={{ padding: '10px', width: '45%' }}
+              error={errors.lastName}
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              onChange={handleChange}
+              placeholder="Smith"
+              required={true}
+              value={values.lastName}
+              variant="outlined"
+              onBlur={handleChange}
+            />
           </Grid>
-        </Grid>
-      </Card>
+          <Grid container direction="row" justify="space-evenly" alignItems="center">
+            <TextInputField
+              style={{ padding: '10px', width: '45%' }}
+              error={errors.email}
+              id="email"
+              label="Email"
+              name="email"
+              onChange={handleChange}
+              placeholder="johnsmith@gmail.com"
+              required={true}
+              value={values.email}
+              variant="outlined"
+              onBlur={handleChange}
+            />
+            <TextInputField
+              style={{ padding: '10px', width: '45%' }}
+              error={errors.phone}
+              id="phone"
+              label="Phone Number"
+              name="phone"
+              onChange={handleChange}
+              placeholder="10009"
+              required={true}
+              value={values.phone}
+              variant="outlined"
+              onBlur={handleChange}
+            />
+          </Grid>
+
+          <Grid container direction="row" justify="space-evenly" alignItems="center">
+            <TextInputField
+              style={{ padding: '10px', width: '100%' }}
+              error={errors.street1}
+              id="street1"
+              label="Address"
+              name="street1"
+              onChange={handleChange}
+              placeholder="3928 Broadway Ave."
+              required={true}
+              value={values.street1}
+              variant="outlined"
+              onBlur={handleChange}
+            />
+            <TextInputField
+              style={{ padding: '10px', width: '100%' }}
+              error={errors.street2}
+              id="street2"
+              label="Address 2"
+              name="street2"
+              onChange={handleChange}
+              placeholder="Apt 3B"
+              value={values.street2}
+              variant="outlined"
+              onBlur={handleChange}
+            />
+          </Grid>
+          <Grid container direction="row" justify="space-evenly" alignItems="center">
+            <TextInputField
+              style={{ padding: '10px', width: '100%' }}
+              error={errors.city}
+              id="city"
+              label="City"
+              name="city"
+              onChange={handleChange}
+              placeholder="New York"
+              required={true}
+              value={values.city}
+              variant="outlined"
+              onBlur={handleChange}
+            />
+          </Grid>
+          <Grid container direction="row" justify="space-evenly" alignItems="center">
+            <SelectField
+              style={{ padding: '10px', width: '45%' }}
+              error={errors.state}
+              id="state"
+              label="State"
+              name="state"
+              onChange={handleChange}
+              required={true}
+              select={true}
+              value={values.state}
+              onBlur={handleChange}
+              options={stateArr}
+            />
+            <TextInputField
+              style={{ padding: '10px', width: '45%' }}
+              error={errors.zip}
+              id="zip"
+              label="Zip Code"
+              name="zip"
+              onChange={handleChange}
+              placeholder="10009"
+              required={true}
+              value={values.zip}
+              variant="outlined"
+              onBlur={handleChange}
+            />
+          </Grid>
+          <Grid container direction="row" justify="space-evenly" alignItems="center">
+            <CustomButton color={'primary'} variant={'contained'} size={'large'} onClick={handleSubmit} text={'Save'} />
+          </Grid>
+        </Card>
+      </Grid>
     </FormField>
   );
 }

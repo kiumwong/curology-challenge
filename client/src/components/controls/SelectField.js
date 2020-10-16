@@ -17,12 +17,14 @@ function SelectField(props) {
     placeholder,
     required,
     select,
+    style,
     value,
   } = props;
 
   return (
     <TextField
       id={id}
+      style={style}
       defaultValue={defaultValue}
       label={label}
       name={name}

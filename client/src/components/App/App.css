@@ -3,14 +3,44 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 100%;
   pointer-events: none;
+  padding-left: 80px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App-image {
+  height: 60px;
+}
+
+.Menu-item {
+  padding-right: 80px;
+}
+
+.Spacing-top {
+  padding-top: 80px;
+}
+
+.Spacing-left {
+  padding-top: 80px;
+}
+
+.Product {
+  display: grid;
+  grid-template: 1fr / 1fr;
+  place-items: center;
+}
+
+.Product > * {
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
+}
+
+.Product > .below {
+  z-index: 2;
+}
+
+.Product > .top {
+  z-index: 1;
 }
 
 .App-header {

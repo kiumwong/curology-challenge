@@ -16,12 +16,14 @@ function TextInputField(props) {
     placeholder,
     defaultValue,
     required,
+    style,
     value,
   } = props;
 
   return (
     <TextField
       id={id}
+      style={style}
       label={label}
       name={name}
       onChange={onChange}

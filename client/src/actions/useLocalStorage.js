@@ -17,7 +17,7 @@ function useLocalStorage(key, value) {
 
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (err) {
-      console.log(err);
+      return err;
     }
   };
   return [storedValue, setValue];
