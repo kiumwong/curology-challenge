@@ -21,3 +21,6 @@ module.exports = {
     use_env_variable: process.env.PROD_KEY,
   },
 };
+
+# Environment
+STATIC_DIR=./public

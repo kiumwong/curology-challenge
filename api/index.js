@@ -5,6 +5,10 @@ import OrderRoutes from "./server/routes/OrderRoutes";
 import cors from "cors";
 import logger from "morgan";
 const path = require("path");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const env = require("dotenv").config({ path: './.env' });
+
 
 const app = express();
 const port = process.env.PORT || 5678;

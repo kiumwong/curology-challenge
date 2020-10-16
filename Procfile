@@ -1,1 +1,2 @@
-web: npm run heroku-postbuild
+web: node index.js
+web: bundle exec node start -p $PORT
