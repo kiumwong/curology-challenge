@@ -53,15 +53,12 @@ function UserPaymentInputForm(props) {
     validate,
   );
 
-  console.log(values.ccNum)
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
     if (validate()) {
-      setIsLoading(true);
       registerOrder();
-      if(success) {
+      if (success) {
         resetForm();
         setIsLoading(false);
       }
@@ -116,30 +113,34 @@ function UserPaymentInputForm(props) {
       });
       const responseBody = await response.json();
       if (responseBody.status === 400) {
-        window.alert('Please provide complete details.')
+        window.alert('Please provide complete details.');
         setError('Please provide complete details.');
         setIsLoading(false);
         setErrorAlert(true);
       } else if (responseBody.status === 401) {
-        window.alert('A user with the information already exists.')
+        window.alert('A user with the information already exists.');
         setError('A user with the information already exists.');
         setIsLoading(false);
         setErrorAlert(true);
       } else if (responseBody.status === 401) {
-        window.alert('Magic potion order may not exceed maximum quanity of 3')
+        window.alert('Magic potion order may not exceed maximum quanity of 3');
         setError('Magic potion order may not exceed maximum quanity of 3');
         setIsLoading(false);
         setErrorAlert(true);
       }
       if (responseBody.status === 201 || 204) {
-        window.alert(`Thank you ${values.firstName} ${values.lastName}! Your order for ${values.quantity} Magic potion(s), total of ${values.total} will be charged to cc: ${values.ccNum}, exp: ${values.exp}. Your order will be shipped to ${values.street1} ${values.street2} ${values.city}, ${values.state}, ${values.zip}. If we have any issues, we will contact you at ${values.email} or ${values.phone}. Follow us for more details on the Magic Potion!`)
+        window.alert(
+          `Thank you ${requestBody.firstName} ${requestBody.lastName}! Your order for ${requestBody.quantity} Magic potion(s), total of ${requestBody.total} will be charged to cc: ${requestBody.payment.ccNum}, exp: ${requestBody.payment.exp}. Your order will be shipped to ${requestBody.address.street1} ${requestBody.address.street2} ${requestBody.address.city}, ${requestBody.address.state}, ${requestBody.address.zip}. If we have any issues, we will contact you at ${requestBody.email} or ${requestBody.phone}. Follow us for more details on the Magic Potion!`,
+        );
         setSuccess('Your Order has been placed!');
         localStorage.setItem('orders', JSON.stringify(requestBody));
         setIsLoading(false);
         setSuccessAlert(true);
       }
     } catch (error) {
-      window.alert(`Sorry ${values.firstName} ${values.lastName}! Your order for ${values.quantity} Magic potion(s), total of ${values.total} is very important to us. But due to the high volumes of orders, we are having issues with our backend. Your cc: ${values.ccNum}, exp: ${values.exp} will NOT be charged. If you see any charges, please contact us. Unfortunately, your order will NOT be shipped to ${values.street1} ${values.street2} ${values.city}, ${values.state}, ${values.zip}. If we fix our backend issues related to no database to query (sequelize) order parameters, we will contact you at ${values.email} or ${values.phone}. Follow us for more details on the Magic Potion!`)
+      window.alert(
+        `error: ${error.message}. Sorry ${values.firstName} ${values.lastName}! Your order for ${values.quantity} Magic potion(s), total of ${values.total} is very important to us. But due to the high volumes of orders, we are having issues with our backend. If you see any charges, please contact us. Unfortunately, your order will NOT be shipped. If we fix our backend issues related to no database to query (sequelize) order parameters, we will contact you. Follow us for more details on the Magic Potion!`,
+      );
       setError('We are working on this issue!');
       setIsLoading(false);
       setErrorAlert(true);
@@ -153,11 +154,21 @@ function UserPaymentInputForm(props) {
           <CardHeader style={{ backgroundColor: 'rgb(51, 46, 84)', color: '#fff' }} title="Payment Information" />
 
           {errorAlert ? (
-            <MessageAlert errorMessage={`Error: ${error}`} onClose={handleErrorClose} onClick={handleErrorClose} autoHideDuration={6000} />
+            <MessageAlert
+              errorMessage={`Error: ${error}`}
+              onClose={handleErrorClose}
+              onClick={handleErrorClose}
+              autoHideDuration={6000}
+            />
           ) : null}
 
           {successAlert ? (
-            <MessageAlert errorMessage={`Success: ${success}`} onClick={handleSuccessClose} onClose={handleSuccessClose} autoHideDuration={6000} />
+            <MessageAlert
+              errorMessage={`Success: ${success}`}
+              onClick={handleSuccessClose}
+              onClose={handleSuccessClose}
+              autoHideDuration={6000}
+            />
           ) : null}
 
           <Grid container direction="row" justify="space-evenly" alignItems="center">

@@ -62,7 +62,9 @@ function UserOrderForm(props) {
         total: values.total,
       });
       localStorage.setItem('orderData', JSON.stringify(requestBody));
-      window.alert(`${values.quantity} Magic Potion(s) added to cart. Total is $${values.total}. Continue to Contact Information.`);
+      window.alert(
+        `${values.quantity} Magic Potion(s) added to cart. Total is $${values.total}. Continue to Contact Information.`,
+      );
     }
   };
 
@@ -101,12 +103,7 @@ function UserOrderForm(props) {
             />
           </Grid>
           <Grid container direction="row" justify="space-evenly" alignItems="center">
-            <CustomButton
-              color={'primary'}
-              variant={'contained'}
-              onClick={handleSubmit}
-              text={'Add to cart'}
-            />
+            <CustomButton color={'primary'} variant={'contained'} onClick={handleSubmit} text={'Add to cart'} />
           </Grid>
         </Card>
       </Grid>

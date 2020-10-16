@@ -11,7 +11,6 @@ import initialValues from '../variables/initialValues';
 import stateArr from '../variables/states';
 
 function UserContactInputForm(props) {
-
   const validate = (fieldValues = values) => {
     let err = { ...errors };
 
@@ -109,7 +108,9 @@ function UserContactInputForm(props) {
         },
       });
       localStorage.setItem('userData', JSON.stringify(requestBody));
-      window.alert(`Thank you ${values.firstName} ${values.lastName}! Just one more step before getting your Magic Potion order! Continue to Payment!`);
+      window.alert(
+        `Thank you ${values.firstName} ${values.lastName}! Just one more step before getting your Magic Potion order! Continue to Payment! Your order for ${values.quantity} Magic potion(s), total of ${values.total} will be shipped to ${values.street1} ${values.street2} ${values.city}, ${values.state}, ${values.zip}. If we have any issues, we will contact you at ${values.email} or ${values.phone}. Follow us for more details on the Magic Potion!`,
+      );
     }
   };
 

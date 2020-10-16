@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import {
   Card,
   CardActionArea,
-  CardMedia,
   CircularProgress,
   CardContent,
   Typography,
   CardHeader,
-  CardBody,
   Grid,
   Paper,
 } from '@material-ui/core';
@@ -19,7 +17,7 @@ function Product(props) {
 
   setTimeout(() => {
     setIsLoading(false);
-  }, 20000);
+  }, 10000);
 
   return (
     <FormField onSubmit={handleSubmit}>

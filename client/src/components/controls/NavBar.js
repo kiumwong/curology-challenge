@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 
 import { AppBar, Toolbar, Button, IconButton, Grid } from '@material-ui/core';
 import { Menu, AccountCircle } from '@material-ui/icons';
