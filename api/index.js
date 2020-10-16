@@ -4,8 +4,7 @@ import bodyParser from "body-parser";
 import OrderRoutes from "./server/routes/OrderRoutes";
 import cors from "cors";
 import logger from "morgan";
-const path = require('path');
-
+const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 5678;
@@ -25,7 +24,7 @@ app.get("*", (req, res) =>
 );
 
 if (process.env.NODE_ENV == "production") {
-  app.use('/', express.static('../../client/'));
+  app.use("/", express.static("../client/"));
   app.get("/*", function (request, response) {
     response.sendFile(path.join(__dirname, "build", "index.html"));
   });
