@@ -15,7 +15,7 @@
     "test:features": "cross-env NODE_PATH=. NODE_ENV=test mocha --opts test/mocha.opts.features",
     "coverage": "cross-env NODE_PATH=. NODE_ENV=test nyc mocha --opts test/mocha.opts.unit",
     "routes": "DEBUG=*:* npm run dev",
-    "heroku-postbuild": "./client && npm install && npm run build"
+    "heroku-postbuild": "cd ./client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
