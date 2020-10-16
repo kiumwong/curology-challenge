@@ -5,9 +5,17 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node ./api/index.js",
+    "dev2": "concurrently --names \"React,Express\" --prefix-colors \"green,blue\" \"cd ../client && npm run start\" \"npm run dev\"",
     "sequelize": "cross-env NODE_PATH=. sequelize",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test2": "react-scripts test --env=jsdom && mocha --reporter list",
+    "test:all": "npm run test:unit && npm run test:features",
+    "test:unit": "cross-env NODE_PATH=. NODE_ENV=test mocha --opts test/mocha.opts.unit",
+    "test:features": "cross-env NODE_PATH=. NODE_ENV=test mocha --opts test/mocha.opts.features",
+    "coverage": "cross-env NODE_PATH=. NODE_ENV=test nyc mocha --opts test/mocha.opts.unit",
+    "routes": "DEBUG=*:* npm run dev",
+    "heroku-postbuild": "NODE_ENV=production NODE_PATH=. sequelize db:migrate --url=$DATABASE_URL"
   },
   "keywords": [],
   "author": "",
