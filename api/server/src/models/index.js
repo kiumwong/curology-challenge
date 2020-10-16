@@ -48,8 +48,12 @@ fs
            (file !== basename) && (file.slice(-3) === '.js');
   })
   .forEach((file) => {
+    try {
     const model = require(path.join(__dirname, file));
     db[model.name] = model;
+    } catch (error) {
+      return error;
+    }
   });
 
 Object.keys(db).forEach((modelName) => {
