@@ -21,7 +21,7 @@ function UserOrderForm(props) {
     let err = { ...errors };
 
     if ('quantity' in fieldValues) {
-      err.quantity = fieldValues.quantity ? '' : 'Max 3: Due to limited supplies.';
+      err.quantity = fieldValues.quantity <= maxQuantity ? '' : 'Max 3: Due to limited supplies.';
     }
     if (typeof fieldValues['quantity'] in fieldValues === number) {
       err.quantityType = fieldValues.quantity ? '' : 'Not a number';
@@ -42,7 +42,7 @@ function UserOrderForm(props) {
     }
 
     if (fieldValues === values) {
-      return Object.values(err).every((x) => x == '');
+      return Object.values(err).every((x) => x === '');
     }
   };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { AppBar, Toolbar, Button, IconButton, Grid } from '@material-ui/core';
-import { Menu, AccountCircle } from '@material-ui/icons';
+import { Menu } from '@material-ui/icons';
 
 function CustomNavBar(props) {
   return (

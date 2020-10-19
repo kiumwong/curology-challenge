@@ -9,12 +9,14 @@ import useValidateForm from '../actions/useValidateForm';
 
 import initialValues from '../variables/initialValues';
 
+
 function UserPaymentInputForm(props) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorAlert, setErrorAlert] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
+
 
   const validate = (fieldValues = values) => {
     let err = { ...errors };
@@ -26,7 +28,7 @@ function UserPaymentInputForm(props) {
         ? ''
         : 'Credit card number is not valid.';
     }
-    if (typeof fieldValues['ccNum'] in fieldValues == 'string') {
+    if (typeof fieldValues['ccNum'] in fieldValues === 'string') {
       err.ccNumType = fieldValues.ccNum ? '' : 'Not a string';
     }
 
@@ -43,7 +45,7 @@ function UserPaymentInputForm(props) {
     setIsLoading(false);
 
     if (fieldValues === values) {
-      return Object.values(err).every((x) => x == '');
+      return Object.values(err).every((x) => x === '');
     }
   };
 
@@ -65,17 +67,11 @@ function UserPaymentInputForm(props) {
     }
   };
 
-  const handleSuccessClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  const handleSuccessClose = () => {
     setSuccessAlert(false);
   };
 
-  const handleErrorClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  const handleErrorClose = () => {
     setErrorAlert(false);
   };
 
@@ -103,7 +99,7 @@ function UserPaymentInputForm(props) {
       total: JSON.parse(orderData).total,
     });
     try {
-      const response = await fetch('/api/v1/magic', {
+      const response = await fetch(`http://127.0.0.1:5678/api/v1/magic`, {
         method: 'POST',
         body: requestBody,
         headers: {
@@ -156,9 +152,7 @@ function UserPaymentInputForm(props) {
           {errorAlert ? (
             <MessageAlert
               errorMessage={`Error: ${error}`}
-              onClose={handleErrorClose}
               onClick={handleErrorClose}
-              autoHideDuration={6000}
             />
           ) : null}
 
@@ -166,8 +160,6 @@ function UserPaymentInputForm(props) {
             <MessageAlert
               errorMessage={`Success: ${success}`}
               onClick={handleSuccessClose}
-              onClose={handleSuccessClose}
-              autoHideDuration={6000}
             />
           ) : null}
 

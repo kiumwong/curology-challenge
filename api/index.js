@@ -9,7 +9,7 @@ import path from "path";
 
 
 const app = express();
-const port = process.env.PORT || '5678';
+const port = process.env.PORT || 5678;
 
 config.config();
 

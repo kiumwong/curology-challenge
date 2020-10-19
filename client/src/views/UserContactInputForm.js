@@ -81,7 +81,7 @@ function UserContactInputForm(props) {
     setErrors({ ...err });
 
     if (fieldValues === values) {
-      return Object.values(err).every((x) => x == '');
+      return Object.values(err).every((x) => x === '');
     }
   };
 
