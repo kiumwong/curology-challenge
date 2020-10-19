@@ -13,7 +13,7 @@
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "test": "export NODE_ENV=test &&  sequelize db:migrate:undo:all  && sequelize db:migrate  && nyc --require @babel/register  mocha ./api/test/test.js --timeout 20000 --exit",
     "routes": "DEBUG=*:* npm run dev",
-    "heroku-postbuild": "rm -rf ./build && babel -d ./build ./api -s"
+    "heroku-postbuild": "cd ./client && npm run build"  
   },
   "keywords": [],
   "author": "",
