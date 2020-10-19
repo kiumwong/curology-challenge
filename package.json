@@ -11,9 +11,9 @@
     "dev2": "concurrently --names \"React,Express\" --prefix-colors \"green,blue\" \"cd ./client && npm run start\" \"npm run dev\"",
     "sequelize": "cross-env NODE_PATH=. sequelize",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
-    "test": "export NODE_ENV=test &&  sequelize db:migrate:undo:all  && sequelize db:migrate  && nyc --require @babel/register  mocha ./api/test/test.js --timeout 20000 --exit",
+    "test": "export NODE_ENV=test && sequelize db:migrate:undo:all  && sequelize db:migrate  && nyc --require @babel/register  mocha ./api/test/test.js --timeout 20000 --exit",
     "routes": "DEBUG=*:* npm run dev",
-    "heroku-postbuild": "cd ./client && npm run build"  
+    "heroku-postbuild": "cd ./client && npm install && npm run build && npm build:fixBabelissues"  
   },
   "keywords": [],
   "author": "",
