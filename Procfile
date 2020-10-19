@@ -1,2 +1,2 @@
-worker: node ./api/index.js
+worker: babel-node ./api/index.js
 
