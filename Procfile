@@ -1,2 +1,3 @@
-worker: cd ./client && npm run start
+web: npm start
+worker: npm start
 
