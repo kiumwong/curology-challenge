@@ -1,2 +1,2 @@
-worker: babel-node ./api/index.js
+worker: cd ./client && npm run start
 
