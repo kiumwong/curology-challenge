@@ -5,7 +5,7 @@
   "main": "index.js",
   "proxy": "http://localhost:5678",
   "scripts": {
-    "start": "cd ./client && npm run start",
+    "start": "nodemon --exec babel-node ./api/index.js",
     "build:fixBabelissues": "rm -rf ./build && babel -d ./build ./api -s",
     "dev": "nodemon --exec babel-node ./api/index.js",
     "dev2": "concurrently --names \"React,Express\" --prefix-colors \"green,blue\" \"cd ./client && npm run start\" \"npm run dev\"",
