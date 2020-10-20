@@ -1,3 +1,3 @@
-web: npm start
-worker: npm start
+web: npm run start
+worker: npm run start
 
