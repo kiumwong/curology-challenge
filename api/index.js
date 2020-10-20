@@ -6,6 +6,10 @@ const cors = require("cors");
 const logger = require("morgan");
 const path = require("path");
 
+const basename = path.join(__dirname);
+const newBase = basename.split('api');
+console.log(newBase[0])
+
 config.config();
 
 const app = express();
@@ -28,7 +32,7 @@ app.get("*", (req, res) =>
 if (process.env.NODE_ENV == "production") {
   app.use('/', express.static("./build"));
   app.get("/*", (req, res) => {
-    res.sendFile(path.join("/client/build", "index.html"));
+    res.sendFile(path.join(newBase[0], "/client/build", "index.html"));
   });
 }
 
