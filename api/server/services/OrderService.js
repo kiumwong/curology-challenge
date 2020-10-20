@@ -1,5 +1,4 @@
-import database from "../src/models";
-import Sequelize from "sequelize";
+const database = require("../src/models");
 
 class OrderService {
   static async addOrder(newOrder) {
@@ -119,4 +118,4 @@ class OrderService {
   }
 }
 
-export default OrderService;
+module.exports = OrderService;

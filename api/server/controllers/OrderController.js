@@ -1,5 +1,5 @@
-import OrderService from "../services/OrderService";
-import Util from "../utils/Utils";
+const OrderService = require("../services/OrderService");
+const Util = require("../utils/Utils");
 
 const util = new Util();
 
@@ -141,4 +141,4 @@ class OrderController {
   }
 }
 
-export default OrderController;
+module.exports = OrderController;

@@ -1,18 +1,21 @@
-import express from "express";
-import bodyParser from "body-parser";
-import OrderRoutes from "./server/routes/OrderRoutes";
-import cors from "cors";
-import logger from "morgan";
-import path from "path";
+const config = require("dotenv");
+const express = require("express");
+const bodyParser = require("body-parser");
+const OrderRoutes = require("./server/routes/OrderRoutes");
+const cors = require("cors");
+const logger = require("morgan");
+const path = require("path");
+
+config.config();
 
 const app = express();
-const port = process.env.PORT || 5678;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(cors());
 app.use(logger("dev"));
+
+const port = process.env.PORT || 5678;
 
 app.use("/api/v1/magic", OrderRoutes);
 
@@ -33,4 +36,4 @@ app.listen(port, () => {
   console.log(`Server is running on PORT ${port}`);
 });
 
-export default app;
+module.exports = app;
