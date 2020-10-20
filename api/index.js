@@ -1,4 +1,3 @@
-import config from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
 import OrderRoutes from "./server/routes/OrderRoutes";
@@ -6,15 +5,12 @@ import cors from "cors";
 import logger from "morgan";
 import path from "path";
 
-
-
 const app = express();
 const port = process.env.PORT || 5678;
 
-config.config();
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cors());
 app.use(logger("dev"));
 

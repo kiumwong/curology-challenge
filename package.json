@@ -12,8 +12,7 @@
     "sequelize": "cross-env NODE_PATH=. sequelize",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "test": "export NODE_ENV=test && sequelize db:migrate:undo:all  && sequelize db:migrate  && nyc --require @babel/register  mocha ./api/test/test.js --timeout 20000 --exit",
-    "routes": "DEBUG=*:* npm run dev",
-    "heroku-postbuild": "cd ./client && npm install && npm run build"  
+    "heroku-postbuild": "cd ./client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
@@ -44,6 +43,9 @@
     "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
     "mocha": "^8.1.3",
     "nyc": "^15.1.0"
   }

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import configJson from '../config/config';
+import configJson from '../../../config/config';
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
@@ -48,7 +48,9 @@ fs
   .forEach((file) => {
     console.log(file)
       const model = require(path.join(__dirname, file));
+      console.log(model)
       db[model.name] = model;
+      console.log(model)
   });
 
 Object.keys(db).forEach((modelName) => {
