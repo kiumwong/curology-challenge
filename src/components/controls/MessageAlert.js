@@ -24,9 +24,7 @@ export default function MessageAlert(props) {
     <div className={classes.root}>
       <div>
         <Button onClick={handleClose}>
-          <Alerts severity={severity}>
-            {errorMessage}
-          </Alerts>
+          <Alerts severity={severity}>{errorMessage}</Alerts>
         </Button>
       </div>
     </div>

@@ -9,14 +9,12 @@ import useValidateForm from '../actions/useValidateForm';
 
 import initialValues from '../variables/initialValues';
 
-
 function UserPaymentInputForm(props) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorAlert, setErrorAlert] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
-
 
   const validate = (fieldValues = values) => {
     let err = { ...errors };
@@ -149,19 +147,9 @@ function UserPaymentInputForm(props) {
         <Card>
           <CardHeader style={{ backgroundColor: 'rgb(51, 46, 84)', color: '#fff' }} title="Payment Information" />
 
-          {errorAlert ? (
-            <MessageAlert
-              errorMessage={`Error: ${error}`}
-              onClick={handleErrorClose}
-            />
-          ) : null}
+          {errorAlert ? <MessageAlert errorMessage={`Error: ${error}`} onClick={handleErrorClose} /> : null}
 
-          {successAlert ? (
-            <MessageAlert
-              errorMessage={`Success: ${success}`}
-              onClick={handleSuccessClose}
-            />
-          ) : null}
+          {successAlert ? <MessageAlert errorMessage={`Success: ${success}`} onClick={handleSuccessClose} /> : null}
 
           <Grid container direction="row" justify="space-evenly" alignItems="center">
             <TextInputField
