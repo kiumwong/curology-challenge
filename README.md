@@ -13,7 +13,7 @@
     <a href="https://github.com/kiumwong/curology-challenge.git"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/kiumwong/curology-challenge.git">View Demo</a>
+    <a href="https://curology.herokuapp.com/">View Demo</a>
     ·
     <a href="https://github.com/kiumwong/curology-challenge.git/issues">Report Bug</a>
     ·
@@ -41,7 +41,12 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<a href="https://curology.herokuapp.com/">View Demo: Interactive 3D Product Viewing with Add to Cart</a> 
+
+![Interactive 3D Product Viewing with Add to Cart:](https://user-images.githubusercontent.com/68714620/96306930-b1775700-0fce-11eb-8bbf-a6e66c94515b.png)
+Form Validations
+![](https://user-images.githubusercontent.com/68714620/96307229-4712e680-0fcf-11eb-9ef6-b5f616ce7907.png)
+![Form Validations](https://user-images.githubusercontent.com/68714620/96307073-f7ccb600-0fce-11eb-90d6-4161da88507e.png)
 
 # Built With
 
