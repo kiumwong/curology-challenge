@@ -18,7 +18,7 @@
     "react-scripts": "3.4.3"
   },
   "scripts": {
-    "start": "concurrently --names \"React,Express\" --prefix-colors \"green,blue\" \"react-scripts start\" \"cd ../api && node index.js\"",
+    "start": "react-scripts start && node ../api/index.js",
     "dev": "concurrently --names \"React,Express\" --prefix-colors \"green,blue\" \"cd ../server && npm run dev\" \"npm run start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
