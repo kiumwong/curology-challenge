@@ -2,6 +2,7 @@
   "name": "curology-magic-potion",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
   "proxy": "http://localhost:5678",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -38,7 +39,7 @@
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "test": "export NODE_ENV=test &&  sequelize db:migrate:undo:all  && sequelize db:migrate  && nyc mocha ./api/test/test.js --timeout 20000 --exit",
     "build": "react-scripts build",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm install && npm run build"
   },
   "devDependencies": {
     "chai": "^4.2.0",
