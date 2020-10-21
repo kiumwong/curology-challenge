@@ -6,10 +6,6 @@ const cors = require("cors");
 const logger = require("morgan");
 const path = require("path");
 
-const basename = path.join(__dirname);
-const newBase = basename.split('api');
-console.log(newBase[0])
-
 config.config();
 
 const app = express();
