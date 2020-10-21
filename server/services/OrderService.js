@@ -1,5 +1,6 @@
 const database = require("../src/models");
 
+
 class OrderService {
   static async addOrder(newOrder) {
     try {
@@ -13,8 +14,8 @@ class OrderService {
         city: newOrder.address.city,
         state: newOrder.address.state,
         zip: newOrder.address.zip,
-        ccNum: newOrder.ccNum,
-        exp: newOrder.exp,
+        ccNum: newOrder.payment.ccNum,
+        exp: newOrder.payment.exp,
         quantity: newOrder.quantity,
         total: newOrder.total,
         fulfilled: true,

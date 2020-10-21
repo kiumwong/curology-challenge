@@ -5,6 +5,8 @@ const OrderRoutes = require("./server/routes/OrderRoutes");
 const cors = require("cors");
 const logger = require("morgan");
 const path = require("path");
+const db = require('./server/src/models');
+
 
 config.config();
 
@@ -31,6 +33,7 @@ if (process.env.NODE_ENV == "production") {
     })
   );
 }
+
 
 app.listen(port, () => {
   console.log(`Server is running on PORT ${port}`);
