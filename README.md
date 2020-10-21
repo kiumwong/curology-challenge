@@ -37,7 +37,7 @@
 
 ## About The Project
 
-<a href="https://curology.herokuapp.com/">View Demo:</a> Interactive 3D Product Viewing with Add to Cart
+<a href="https://curology.herokuapp.com/">View Demo: Interactive 3D Product Viewing with Add to Cart</a> 
 
 ![Interactive 3D Product Viewing with Add to Cart:](https://user-images.githubusercontent.com/68714620/96306930-b1775700-0fce-11eb-8bbf-a6e66c94515b.png)
 Form Validations
