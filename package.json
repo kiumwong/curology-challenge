@@ -5,7 +5,7 @@
   "main": "index.js",
   "proxy": "http://localhost:5678",
   "scripts": {
-    "start": "node ./api/index.js",
+    "start": "cd ./api && node index.js",
     "dev": "nodemon ./api/index.js",
     "dev2": "concurrently --names \"React,Express\" --prefix-colors \"green,blue\" \"cd ./client && npm run start\" \"npm run dev\"",
     "sequelize": "cross-env NODE_PATH=. sequelize",

@@ -18,9 +18,10 @@
     "react-scripts": "3.4.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cd .. && npm start",
+    "start-client": "react-scripts start",
     "dev": "concurrently --names \"React,Express\" --prefix-colors \"green,blue\" \"cd ../server && npm run dev\" \"npm run start\"",
-    "build": "react-scripts build",
+    "build": "react-scripts build && (cd .. && npm install)",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
