@@ -53,6 +53,7 @@ function UserPaymentInputForm(props) {
     validate,
   );
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
